@@ -14,12 +14,10 @@ public class ZyboClient {
 		String pass = in.next();
 		try {
 			socket = new FTPClient(server, PORT, user, pass);
-			socket.changeDirectory("/upload");
-			return;
+//			socket.changeDirectory("/upload");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 		}
-		connect();
 	}
 
 	public static void menu() {
@@ -44,11 +42,12 @@ public class ZyboClient {
 		default: System.out.println("Please enter a valid choice");
 		}
 	}
-
+	
+//	brugeren får mulighed for at skifte downloadmappen
 	public static void transferMenu() {
 		int choice = 0;
 		System.out.println("1. Transfer file");
-		System.out.println("2. Channge transfer directory (default: program direcctory");
+		System.out.println("2. Channge transfer directory (default: program directory)");
 		try {
 			choice = in.nextInt();
 		} catch(Exception e) {
@@ -79,7 +78,6 @@ public class ZyboClient {
 	public static void transfer(String filename) {
 		try {
 			FileOutputStream localFilepath = new FileOutputStream(localPath + filename);
-			//	ftpClient.retrieveFile("/upload/" + filename, localFilepath);
 			socket.getFile(filename, localFilepath);
 			if(localPath != null && !localPath.equals(""))
 				System.out.println("File transfered to " + localPath);

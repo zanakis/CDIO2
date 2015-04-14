@@ -1,10 +1,10 @@
-import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.net.Socket;
 
 
 public class Listener extends Thread {
 	
-	public Listener(BufferedReader inFromServer) {
+	public Listener(DataInputStream inFromServer) {
 		this.inFromServer = inFromServer;
 	}
 	
@@ -21,5 +21,5 @@ public class Listener extends Thread {
 		}
 	}
 	
-	private BufferedReader inFromServer;
+	private DataInputStream inFromServer;
 }
