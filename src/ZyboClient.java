@@ -18,14 +18,11 @@ public class ZyboClient {
 		ftpClient = new FTPClient();
 		try {
 			ftpClient.connect(server, PORT);
-			//			showServerReply(ftpClient);
 			int replyCode = ftpClient.getReplyCode();
 			if (!FTPReply.isPositiveCompletion(replyCode)) {
 				System.out.println("Operation failed. Server reply code: " + replyCode);
 				return;
 			}
-			//			boolean success = ftpClient.login(user, pass);
-			//			showServerReply(ftpClient);
 			if (!ftpClient.login(user, pass)) {
 				System.out.println("Could not login to the server");
 				return;
@@ -38,15 +35,6 @@ public class ZyboClient {
 		}
 		connect();
 	}
-
-	//	private static void showServerReply(FTPClient ftpClient) {
-	//		String[] replies = ftpClient.getReplyStrings();
-	//		if (replies != null && replies.length > 0) {
-	//			for (String reply : replies) {
-	//				System.out.println("SERVER: " + reply);
-	//			}
-	//		}
-	//	}
 
 	public static void menu() {
 		int choice = 0;
@@ -71,12 +59,14 @@ public class ZyboClient {
 	public static void transferMenu() {
 		listFiles();
 		System.out.println("Which file do you want to transfer?");
-		//		transfer(filepath)?
+		in.nextLine();
+		String filepath = in.nextLine();
+//		transfer(filepath)
 	}
 
 	public static void listFiles() {
 		try {
-			FTPFile[] files = ftpClient.listFiles("home/FTP");
+			FTPFile[] files = ftpClient.listFiles("/root/home/FTP");
 			for(FTPFile f: files) {
 				System.out.println(f.getName());
 			}

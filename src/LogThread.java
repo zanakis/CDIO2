@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 
-public class LogThread implements Runnable {
+public class LogThread extends Thread {
 	private Thread t;
 	private String name;
 	private Socket socket;
@@ -27,14 +27,6 @@ public class LogThread implements Runnable {
 			System.out.println("Thread " +  name + " interrupted.");
 		} catch(Exception e) {
 			
-		}
-	}
-
-	public void start() {
-		if (t == null)
-		{
-			t = new Thread (this, name);
-			t.start ();
 		}
 	}
 }

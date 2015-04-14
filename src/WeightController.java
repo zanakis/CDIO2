@@ -25,8 +25,8 @@ public class WeightController {
 		initFiles();
 		readFiles();
 		connect();
-		//		ThreadDemo t1 = new ThreadDemo("Weight output", clientSocket);
-		//		t1.start();
+		LogThread t1 = new LogThread("Weight output", clientSocket);
+		t1.start();
 		do {
 			startSequence();
 		} while(!endProgram);
