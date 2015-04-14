@@ -1,9 +1,11 @@
 import java.util.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.Socket;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
 
-public class ZyboClient {
+public class CopyOfZyboClient {
 	static final int PORT = 21;
 
 	private static void connect() {
@@ -14,14 +16,15 @@ public class ZyboClient {
 		String user = in.next();
 		System.out.println("Enter password");
 		String pass = in.next();
-		socket = new Socket(server, PORT);
+		ftpClient = new FTPClient();
 		try {
-//			int replyCode = ftpClient.getReplyCode();
-//			if (!FTPReply.isPositiveCompletion(replyCode)) {
+			ftpClient.connect(server, PORT);
+			int replyCode = ftpClient.getReplyCode();
+			if (!FTPReply.isPositiveCompletion(replyCode)) {
 				System.out.println("Operation failed. Server reply code: " + replyCode);
 				return;
 			}
-//			if (!ftpClient.login(user, pass)) {
+			if (!ftpClient.login(user, pass)) {
 				System.out.println("Could not login to the server");
 			} else {
 				System.out.println("LOGGED IN SERVER");
@@ -81,9 +84,9 @@ public class ZyboClient {
 
 	public static void listFiles() {
 		try {
-//			FTPFile[] files = ftpClient.listFiles("/upload");
-//			for(FTPFile f: files) {
-//				if(!f.isDirectory())
+			FTPFile[] files = ftpClient.listFiles("/upload");
+			for(FTPFile f: files) {
+				if(!f.isDirectory())
 					System.out.println(f.getName());
 			}
 		} catch(Exception e) {
@@ -94,7 +97,7 @@ public class ZyboClient {
 	public static void transfer(String filename) {
 		try {
 			FileOutputStream localFilepath = new FileOutputStream(localPath + filename);
-//			ftpClient.retrieveFile("/upload/" + filename, localFilepath);
+			ftpClient.retrieveFile("/upload/" + filename, localFilepath);
 			System.out.println("File transfered to " + localPath);
 		} catch(Exception e) {
 			System.out.println("File doesn't exist");
@@ -121,7 +124,7 @@ public class ZyboClient {
 		System.out.println("Enter command to send");
 		String command = in.next();
 		try {
-//			ftpClient.sendCommand(command);
+			ftpClient.sendCommand(command);
 		} catch(Exception e) {
 			System.out.println("Invalid command");
 		}
@@ -129,7 +132,7 @@ public class ZyboClient {
 	}
 
 	private static void showServerReply() {
-//		String[] replies = ftpClient.getReplyStrings();
+		String[] replies = ftpClient.getReplyStrings();
 		if (replies != null && replies.length > 0) {
 			for (String reply : replies) {
 				System.out.println("SERVER: " + reply);
@@ -148,5 +151,5 @@ public class ZyboClient {
 
 	static String localPath = "";
 	static Scanner in;
-	static Socket socket;
+	static FTPClient ftpClient;
 }
