@@ -20,7 +20,7 @@ public class LogThread extends Thread {
 	public void run(){
 		try {
 			while(true) {
-				System.out.println(name + ": " + inFromServer.readLine());
+				printlog();
 				Thread.sleep(50);
 			}
 		} catch (InterruptedException e) {

@@ -40,6 +40,7 @@ public class ZyboClient {
 		int choice = 0;
 		System.out.println("1. Transfer menu");
 		System.out.println("2. Commando menu");
+		System.out.println("0. Quit");
 		try {
 			choice = in.nextInt();
 		} catch(Exception e) {
@@ -48,6 +49,8 @@ public class ZyboClient {
 			return;
 		}
 		switch(choice) {
+		case 0: quit();
+		break;
 		case 1: transferMenu();
 		break;
 		case 2: commandMenu();
@@ -57,10 +60,26 @@ public class ZyboClient {
 	}
 
 	public static void transferMenu() {
-		listFiles();
+		int choice = 0;
+		System.out.println("1. Transfer file");
+		System.out.println("2. Channge transfer directory (default: program direcctory");
+		try {
+			choice = in.nextInt();
+		} catch(Exception e) {
+			System.out.println("Please enter a number");
+			transferMenu();
+			return;
+		}
+		switch(choice) {
+		case 1: listFiles();
 		System.out.println("Which file do you want to transfer?");
 		String filepath = in.next();
 		transfer(filepath);
+		break;
+		case 2: changeDownloadDirectory();
+		break;
+		default: System.out.println("Please enter a valid number");
+		}
 	}
 
 	public static void listFiles() {
@@ -73,16 +92,21 @@ public class ZyboClient {
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
-
 	}
 
 	public static void transfer(String filename) {
 		try {
-			FileOutputStream localFilepath = new FileOutputStream(filename);
+			FileOutputStream localFilepath = new FileOutputStream(localPath + filename);
 			ftpClient.retrieveFile("/upload/" + filename, localFilepath);
+			System.out.println("File transfered to " + localPath);
 		} catch(Exception e) {
 			System.out.println("File doesn't exist");
 		}
+		menu();
+	}
+
+	public static void changeDownloadDirectory() {
+		localPath = in.next();
 	}
 
 	public static void commandMenu() {
@@ -92,10 +116,18 @@ public class ZyboClient {
 				break;
 			showServerReply();
 		}
+		menu();
 	}
-	
+
 	public static boolean sendCommand() {
-//		sende commands
+		//		sende commands - grov model
+		System.out.println("Enter command to send");
+		String command = in.next();
+		try {
+			ftpClient.sendCommand(command);
+		} catch(Exception e) {
+			System.out.println("Invalid command");
+		}
 		return false;
 	}
 
@@ -108,11 +140,16 @@ public class ZyboClient {
 		}
 	}
 
+	public static void quit() {
+
+	}
+
 	public static void main(String[] args) {
 		connect();
 		menu();
 	}
 
+	static String localPath = "";
 	static Scanner in;
 	static FTPClient ftpClient;
 }
