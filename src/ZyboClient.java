@@ -65,7 +65,7 @@ public class ZyboClient {
 
 	public static void listFiles() {
 		try {
-			FTPFile[] files = ftpClient.listFiles("/home/FTP");
+			FTPFile[] files = ftpClient.listFiles("/");
 			for(FTPFile f: files) {
 				System.out.println(f.getName());
 			}
