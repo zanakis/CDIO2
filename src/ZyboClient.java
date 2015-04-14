@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -66,20 +67,45 @@ public class ZyboClient {
 		try {
 			FTPFile[] files = ftpClient.listFiles("/upload");
 			for(FTPFile f: files) {
-				System.out.println(f.getName());
+				if(!f.isDirectory())
+					System.out.println(f.getName());
 			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 	}
 
-		public static void transfer(String filepath) {
-//			RETR(filepath)?
+	public static void transfer(String filename) {
+		try {
+			FileOutputStream localFilepath = new FileOutputStream(filename);
+			ftpClient.retrieveFile("/upload/" + filename, localFilepath);
+		} catch(Exception e) {
+			System.out.println("File doesn't exist");
 		}
+	}
 
 	public static void commandMenu() {
+		//		mangler implementation
+		while(true) {
+			if(sendCommand())
+				break;
+			showServerReply();
+		}
+	}
+	
+	public static boolean sendCommand() {
+//		sende commands
+		return false;
+	}
 
+	private static void showServerReply() {
+		String[] replies = ftpClient.getReplyStrings();
+		if (replies != null && replies.length > 0) {
+			for (String reply : replies) {
+				System.out.println("SERVER: " + reply);
+			}
+		}
 	}
 
 	public static void main(String[] args) {
