@@ -59,8 +59,7 @@ public class ZyboClient {
 	public static void transferMenu() {
 		listFiles();
 		System.out.println("Which file do you want to transfer?");
-		in.nextLine();
-		String filepath = in.nextLine();
+		String filepath = in.next();
 //		transfer(filepath)
 	}
 
