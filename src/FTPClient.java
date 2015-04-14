@@ -18,13 +18,11 @@ public class FTPClient extends Socket{
 	public void username() throws Exception {
 		outToServer.writeBytes("USER " + user + END_INPUT);
 		outToServer.flush();
-		System.out.println(inFromServer.readLine());
 	}
 	
 	public void password() throws Exception {
 		outToServer.writeBytes("PASS " + pass + END_INPUT);
 		outToServer.flush();
-		System.out.println(inFromServer.readLine());
 	}
 	
 	public void changeDirectory(String str) throws Exception {
@@ -35,8 +33,11 @@ public class FTPClient extends Socket{
 	public String list() throws Exception {
 		outToServer.writeBytes("ls");
 		String str = "";
-		while(!str.equals(str += inFromServer.readLine()))
+		String temp = "";
+		while(!(str += inFromServer.readLine()).equals(temp)) {
 			str += "\n";
+			temp = str;
+		}
 		return str;
 	}
 	
