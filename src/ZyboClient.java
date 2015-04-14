@@ -25,7 +25,6 @@ public class ZyboClient {
 			}
 			if (!ftpClient.login(user, pass)) {
 				System.out.println("Could not login to the server");
-				return;
 			} else {
 				System.out.println("LOGGED IN SERVER");
 				return;
@@ -65,18 +64,18 @@ public class ZyboClient {
 
 	public static void listFiles() {
 		try {
-			FTPFile[] files = ftpClient.listFiles("/");
+			FTPFile[] files = ftpClient.listFiles("/upload");
 			for(FTPFile f: files) {
 				System.out.println(f.getName());
 			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
 	}
 
 		public static void transfer(String filepath) {
 //			RETR(filepath)?
-			ftpClient.
 		}
 
 	public static void commandMenu() {
