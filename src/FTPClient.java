@@ -34,9 +34,9 @@ public class FTPClient extends Socket{
 		outToServer.writeBytes("ls");
 		String str = "";
 		String temp = "";
-		while(!(str += inFromServer.readLine()).equals(temp)) {
+		while(!((temp = inFromServer.readLine()) != null)) {
+			str += temp;
 			str += "\n";
-			temp = str;
 		}
 		return str;
 	}
