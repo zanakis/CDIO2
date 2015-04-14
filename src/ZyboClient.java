@@ -60,12 +60,12 @@ public class ZyboClient {
 		listFiles();
 		System.out.println("Which file do you want to transfer?");
 		String filepath = in.next();
-//		transfer(filepath)
+		transfer(filepath);
 	}
 
 	public static void listFiles() {
 		try {
-			FTPFile[] files = ftpClient.listFiles("/root/home/FTP");
+			FTPFile[] files = ftpClient.listFiles("/home/FTP");
 			for(FTPFile f: files) {
 				System.out.println(f.getName());
 			}
@@ -74,9 +74,10 @@ public class ZyboClient {
 		}
 	}
 
-	//	transfer(filepath) {
-	//		RETR(filepath)?
-	//	}
+		public static void transfer(String filepath) {
+//			RETR(filepath)?
+			ftpClient.
+		}
 
 	public static void commandMenu() {
 
