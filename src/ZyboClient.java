@@ -81,7 +81,9 @@ public class ZyboClient {
 			FileOutputStream localFilepath = new FileOutputStream(localPath + filename);
 			//	ftpClient.retrieveFile("/upload/" + filename, localFilepath);
 			socket.getFile(filename, localFilepath);
-			System.out.println("File transfered to " + localPath);
+			if(localPath != null && !localPath.equals(""))
+				System.out.println("File transfered to " + localPath);
+			else System.out.println("File transfered to default directory");
 		} catch(Exception e) {
 			System.out.println("File doesn't exist");
 		}
